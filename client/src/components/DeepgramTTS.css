@@ -1,0 +1,29 @@
+/* src/components/DeepgramTTS.css */
+
+/* General styles for the DeepgramTTS component */
+.deepgram-tts-container {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.deepgram-tts-container h2 {
+  margin-top: 20px;
+}
+
+.deepgram-tts-container button {
+  margin: 10px 0;
+}
+
+.deepgram-tts-container textarea {
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.audio-player {
+  display: block;
+  margin-top: 20px;
+}
+
+.transcript {
+  margin-top: 20px;
+}

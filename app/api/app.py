@@ -33,7 +33,7 @@ async def get_response(query: Query):
     completion = client.chat.completions.create(
     model="gpt-4o-mini-2024-07-18",
     messages=[
-        {"role": "system", "content": "You are a helpful assistant."},
+        {"role": "system", "content": "You are a helpful assistant.Give only 3 word answers"},
         {"role": "user", "content": query.question}
     ]
     )
