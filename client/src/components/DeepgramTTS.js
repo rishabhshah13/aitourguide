@@ -1,80 +1,92 @@
 // src/components/DeepgramTTS.js
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import TextInput from './TextInput';
-import TextToSpeech from './TextToSpeech';
+import TranscriptDisplay from './TranscriptDisplay';
 import { startRecording, stopRecording } from './AudioRecorder';
 import convertSpeechToText from './SpeechToText';
 import fetchChatGptResponse from './ChatGPTIntegration';
-import AudioPlayer from './AudioPlayer';
-import TranscriptDisplay from './TranscriptDisplay';
+import TextToSpeech from './TextToSpeech';
 
 const DeepgramTTS = () => {
-  const [text, setText] = useState('');
   const [audioUrl, setAudioUrl] = useState(null);
   const [isRecording, setIsRecording] = useState(false);
-  const [blobURL, setBlobURL] = useState('');
   const [transcript, setTranscript] = useState('');
-  const [fileText, setFileText] = useState('');
+  const [fileTextSegments, setFileTextSegments] = useState([]);
+  const [currentSegmentIndex, setCurrentSegmentIndex] = useState(-1);
+  const audioRef = useRef(null);
   const apiKey = process.env.REACT_APP_DEEPGRAM_API_KEY;
 
-  const handleTextChange = (e) => {
-    setText(e.target.value);
-  };
-
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        setFileText(reader.result);
-      };
-      reader.readAsText(file);
+  useEffect(() => {
+    if (currentSegmentIndex >= 0 && currentSegmentIndex < fileTextSegments.length) {
+      handleTTS(fileTextSegments[currentSegmentIndex]);
     }
-  };
+  }, [currentSegmentIndex]);
 
-  const handleTTS = async () => {
-    const audioBlob = await TextToSpeech(fileText || text, apiKey);
+  const handleTTS = async (segment) => {
+    const audioBlob = await TextToSpeech(segment, apiKey);
     if (audioBlob) {
       const audioUrl = URL.createObjectURL(audioBlob);
       setAudioUrl(audioUrl);
+      if (audioRef.current) {
+        audioRef.current.src = audioUrl;
+        audioRef.current.onended = () => {
+          if (currentSegmentIndex < fileTextSegments.length - 1) {
+            setCurrentSegmentIndex(currentSegmentIndex + 1);
+          } else {
+            setCurrentSegmentIndex(-1);
+          }
+        };
+        await audioRef.current.play();
+      }
     }
   };
 
-  const startRecordingHandler = async () => {
-    const success = await startRecording();
-    setIsRecording(success);
-  };
+  const toggleRecording = async () => {
+    if (isRecording) {
+      const { buffer, blob } = await stopRecording();
+      setIsRecording(false);
 
-  const stopRecordingHandler = async () => {
-    const { buffer, blob } = await stopRecording();
-    const blobURL = URL.createObjectURL(blob);
-    setBlobURL(blobURL);
-    setIsRecording(false);
+      const transcriptText = await convertSpeechToText(new File(buffer, 'recording.wav', { type: 'audio/wav' }), apiKey);
+      setTranscript(transcriptText);
 
-    const transcriptText = await convertSpeechToText(new File(buffer, 'recording.wav', { type: 'audio/wav' }), apiKey);
-    setTranscript(transcriptText);
+      const answer = await fetchChatGptResponse(transcriptText);
 
-    const answer = await fetchChatGptResponse(transcriptText);
-
-    const answerAudioBlob = await TextToSpeech(answer, apiKey);
-    if (answerAudioBlob) {
-      const audioUrl = URL.createObjectURL(answerAudioBlob);
-      setAudioUrl(audioUrl);
+      const answerAudioBlob = await TextToSpeech(answer, apiKey);
+      if (answerAudioBlob) {
+        const audioUrl = URL.createObjectURL(answerAudioBlob);
+        setAudioUrl(audioUrl);
+        if (audioRef.current) {
+          audioRef.current.src = audioUrl;
+          audioRef.current.play();
+        }
+      }
+    } else {
+      const success = await startRecording();
+      setIsRecording(success);
     }
   };
 
   return (
     <div>
       <h2>Text to Speech</h2>
-      <TextInput text={text} onTextChange={handleTextChange} onFileChange={handleFileChange} />
-      <button onClick={handleTTS}>Convert to Speech</button>
-      <AudioPlayer src={audioUrl} />
+      <TextInput setFileTextSegments={setFileTextSegments} />
+      <button onClick={() => setCurrentSegmentIndex(0)} disabled={fileTextSegments.length === 0}>Convert to Speech</button>
 
-      <h2>Speech to Text</h2>
-      <button onClick={startRecordingHandler} disabled={isRecording}>Start Recording</button>
-      <button onClick={stopRecordingHandler} disabled={!isRecording}>Stop Recording</button>
-      <AudioPlayer src={blobURL} />
-      <TranscriptDisplay transcript={transcript} />
+      <h2>Ask Question</h2>
+      <button
+        onClick={toggleRecording}
+        style={{
+          backgroundColor: isRecording ? 'red' : 'gray',
+          color: 'white',
+          padding: '10px 20px',
+          border: 'none',
+          cursor: 'pointer',
+        }}
+      >
+        {isRecording ? 'Recording...' : 'Ask Question'}
+      </button>
+      <audio ref={audioRef} controls style={{ display: 'none' }} />
+      <TranscriptDisplay transcript={transcript} currentSegmentIndex={currentSegmentIndex} fileTextSegments={fileTextSegments} />
     </div>
   );
 };

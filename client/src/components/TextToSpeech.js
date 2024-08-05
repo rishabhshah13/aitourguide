@@ -1,9 +1,8 @@
-// src/components/w.js
+// src/components/TextToSpeech.js
 import axios from 'axios';
 
-const convertTextToSpeech = async (text, apiKey) => {
+const TextToSpeech = async (text, apiKey) => {
   const url = 'https://api.deepgram.com/v1/speak?model=aura-asteria-en';
-
   try {
     const response = await axios.post(url, { text }, {
       headers: {
@@ -15,6 +14,9 @@ const convertTextToSpeech = async (text, apiKey) => {
 
     if (response.status === 200) {
       return new Blob([response.data], { type: 'audio/mp3' });
+    } else {
+      console.error(`HTTP error! Status: ${response.status}`);
+      return null;
     }
   } catch (error) {
     console.error('Error generating audio:', error.message);
@@ -22,4 +24,4 @@ const convertTextToSpeech = async (text, apiKey) => {
   }
 };
 
-export default convertTextToSpeech;
+export default TextToSpeech;
