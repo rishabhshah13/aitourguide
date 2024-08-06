@@ -3,4 +3,5 @@
 2. docker exec ollama ollama pull gemma2:2b-text-q5_K_S
 3. Used this for the eslint error
     npm install --save --save-exact react-scripts@latest --force
-4. 
+4. docker tag client:latest rishabhshah13/client:latest
+5. docker tag app:latest rishabhshah13/app:latest

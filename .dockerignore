@@ -1,4 +1,15 @@
-node_modules
-build
-*.log
+# Ignore environment files
 .env
+*.env
+
+# Ignore node_modules directory
+node_modules
+
+# Ignore build directories
+build
+dist
+
+# Ignore Dockerfile and other temporary files
+Dockerfile
+*.md
+*.log

@@ -5,6 +5,7 @@ services:
     build:
       context: ./client
       dockerfile: Dockerfile
+    image: rishabhshah13/frontend:latest
     ports:
       - "80:80"
     depends_on:
@@ -14,6 +15,6 @@ services:
     build:
       context: ./app
       dockerfile: Dockerfile
+    image: rishabhshah13/backend:latest
     ports:
       - "8000:8000"
-

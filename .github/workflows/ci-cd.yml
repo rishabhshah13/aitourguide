@@ -3,7 +3,7 @@ name: CI/CD Pipeline
 on:
   push:
     branches:
-      - main
+      - ci/cd
   pull_request:
     branches:
       - main
@@ -20,26 +20,43 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '16' # Specify the Node.js version you are using
+          node-version: '18' # Update this to match the Node.js version in your Dockerfile
 
-      - name: Install dependencies
+      - name: Install frontend dependencies
+        working-directory: ./client
         run: npm install
 
-      - name: Run Formatting
+      - name: Run frontend formatting
+        working-directory: ./client
         run: npm run format
 
-      - name: Run Linting
+      - name: Run frontend linting
+        working-directory: ./client
         run: npm run lint
 
-      - name: Run Unit Tests
+      - name: Run frontend unit tests
+        working-directory: ./client
         run: npm test
 
-      - name: Build Docker Image
-        run: docker build -t my-app .
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.11' # Match the Python version in your Dockerfile
+
+      - name: Install backend dependencies
+        working-directory: ./app
+        run: pip install -r requirements.txt
+
+      - name: Run backend tests
+        working-directory: ./app
+        run: pytest
+
+      - name: Build Docker images
+        run: docker-compose build
 
       - name: Log in to DockerHub
         run: echo ${{ secrets.DOCKER_HUB_PASSWORD }} | docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} --password-stdin
 
-      - name: Push Docker Image
-        run: docker tag my-app:latest ${{ secrets.DOCKER_HUB_USERNAME }}/my-app:latest
-        run: docker push ${{ secrets.DOCKER_HUB_USERNAME }}/my-app:latest
+      - name: Push Docker images
+        run: |
+          docker-compose push
