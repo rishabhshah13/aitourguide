@@ -1,5 +1,6 @@
 // src/components/DeepgramTTS.js
 import React, { useState, useRef, useEffect } from 'react';
+import './DeepgramTTS.css'; // Import the CSS file for DeepgramTTS
 import TextInput from './TextInput';
 import TranscriptDisplay from './TranscriptDisplay';
 import { startRecording, stopRecording } from './AudioRecorder';
@@ -7,7 +8,6 @@ import convertSpeechToText from './SpeechToText';
 import fetchChatGptResponse from './ChatGPTIntegration';
 import TextToSpeech from './TextToSpeech';
 import Popup from './Popup';
-
 
 const DeepgramTTS = () => {
   const [audioUrl, setAudioUrl] = useState(null);
@@ -71,9 +71,6 @@ const DeepgramTTS = () => {
           audioRef.current.onended = () => {
             setAskQuestionInProgress(false);
             setShowPopup(true); // Show popup after the answer TTS is done
-            if (currentSegmentIndex === -1) { // If no segment is currently playing, start from the first segment
-              setCurrentSegmentIndex(0);
-            }
           };
           audioRef.current.play();
           setAskQuestionInProgress(true);
@@ -102,20 +99,12 @@ const DeepgramTTS = () => {
   const handlePopupClose = () => {
     setShowPopup(false);
     // Resume original TTS playback if it was interrupted
-    if (originalTTSIndex < originalTTSUrls.length) {
-      const nextTTSUrl = originalTTSUrls[originalTTSIndex];
-      setAudioUrl(nextTTSUrl);
-      if (audioRef.current) {
-        audioRef.current.src = nextTTSUrl;
-        audioRef.current.play();
-        setOriginalTTSIndex(originalTTSIndex + 1);
-        setIsPlaying(true);
-      }
-    }
+    setCurrentSegmentIndex(currentSegmentIndex + 1);
+    setIsPlaying(false);
   };
 
   return (
-    <div>
+    <div className="deepgram-tts-container">
       <h2>Text to Speech</h2>
       <TextInput setFileTextSegments={setFileTextSegments} />
       <button onClick={() => setCurrentSegmentIndex(0)} disabled={fileTextSegments.length === 0}>

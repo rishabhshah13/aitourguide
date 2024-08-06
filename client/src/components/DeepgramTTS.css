@@ -14,11 +14,6 @@
   margin: 10px 0;
 }
 
-.deepgram-tts-container textarea {
-  margin-bottom: 20px;
-  width: 100%;
-}
-
 .audio-player {
   display: block;
   margin-top: 20px;
