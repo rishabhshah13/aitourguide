@@ -1,0 +1,29 @@
+/* src/styles/text.css */
+h2 {
+  font-family: 'Arial', sans-serif;
+  font-size: 24px;
+  color: var(--primary-color);
+  margin-bottom: 10px;
+}
+
+p {
+  font-family: 'Arial', sans-serif;
+  font-size: 16px;
+  color: var(--primary-color);
+}
+
+.transcript-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
+  background-color: var(--background-color);
+  border: 1px solid var(--primary-color);
+  border-radius: 4px;
+}
+
+.transcript {
+  padding: 10px;
+  border-radius: 4px;
+  background-color: white;
+}

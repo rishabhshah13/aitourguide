@@ -1,0 +1,51 @@
+/* src/styles/buttons.css */
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px; /* Increased margin for better spacing */
+}
+
+button {
+  position: relative;
+  overflow: hidden;
+}
+
+button:focus {
+  outline: none;
+}
+
+button:active::after {
+  content: '';
+  position: absolute;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 50%;
+  width: 300%;
+  height: 300%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: ripple 0.6s linear;
+}
+
+@keyframes ripple {
+  from {
+    width: 0;
+    height: 0;
+    opacity: 0.5;
+  }
+  to {
+    width: 300%;
+    height: 300%;
+    opacity: 0;
+  }
+}
+
+button:hover {
+  background-color: var(--accent-color);
+  transform: translateY(-3px); /* Slightly more pronounced hover effect */
+}
+
+button:active {
+  transform: translateY(0); /* Reset transform on active */
+}

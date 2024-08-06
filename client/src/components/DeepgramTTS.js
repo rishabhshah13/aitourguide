@@ -1,6 +1,5 @@
 // src/components/DeepgramTTS.js
 import React, { useState, useRef, useEffect } from 'react';
-import './DeepgramTTS.css'; // Import the CSS file for DeepgramTTS
 import TextInput from './TextInput';
 import TranscriptDisplay from './TranscriptDisplay';
 import { startRecording, stopRecording } from './AudioRecorder';
@@ -8,6 +7,10 @@ import convertSpeechToText from './SpeechToText';
 import fetchChatGptResponse from './ChatGPTIntegration';
 import TextToSpeech from './TextToSpeech';
 import Popup from './Popup';
+import '../styles/colors.css';
+import '../styles/layout.css';
+import '../styles/buttons.css';
+import '../styles/text.css';
 
 const DeepgramTTS = () => {
   const [audioUrl, setAudioUrl] = useState(null);
@@ -17,11 +20,11 @@ const DeepgramTTS = () => {
   const [currentSegmentIndex, setCurrentSegmentIndex] = useState(-1);
   const [isPlaying, setIsPlaying] = useState(false);
   const [askQuestionInProgress, setAskQuestionInProgress] = useState(false);
-  const [showPopup, setShowPopup] = useState(false); // New state for popup
+  const [showPopup, setShowPopup] = useState(false); 
   const audioRef = useRef(null);
   const apiKey = process.env.REACT_APP_DEEPGRAM_API_KEY;
   const [originalTTSUrls, setOriginalTTSUrls] = useState([]);
-  const [originalTTSIndex, setOriginalTTSIndex] = useState(0); // Track TTS playback
+  const [originalTTSIndex, setOriginalTTSIndex] = useState(0);
 
   useEffect(() => {
     if (currentSegmentIndex >= 0 && currentSegmentIndex < fileTextSegments.length && !isPlaying && !askQuestionInProgress) {
@@ -34,8 +37,8 @@ const DeepgramTTS = () => {
     if (audioBlob) {
       const audioUrl = URL.createObjectURL(audioBlob);
       setAudioUrl(audioUrl);
-      setOriginalTTSUrls(prevUrls => [...prevUrls, audioUrl]); // Save the URL
-      setOriginalTTSIndex(originalTTSUrls.length); // Update index
+      setOriginalTTSUrls(prevUrls => [...prevUrls, audioUrl]); 
+      setOriginalTTSIndex(originalTTSUrls.length);
       if (audioRef.current) {
         audioRef.current.src = audioUrl;
         audioRef.current.onended = () => {
@@ -70,7 +73,7 @@ const DeepgramTTS = () => {
           audioRef.current.src = answerAudioUrl;
           audioRef.current.onended = () => {
             setAskQuestionInProgress(false);
-            setShowPopup(true); // Show popup after the answer TTS is done
+            setShowPopup(true); 
           };
           audioRef.current.play();
           setAskQuestionInProgress(true);
@@ -98,32 +101,34 @@ const DeepgramTTS = () => {
 
   const handlePopupClose = () => {
     setShowPopup(false);
-    // Resume original TTS playback if it was interrupted
     setCurrentSegmentIndex(currentSegmentIndex + 1);
     setIsPlaying(false);
   };
 
   return (
-    <div className="deepgram-tts-container">
-      <h2>Text to Speech</h2>
-      <TextInput setFileTextSegments={setFileTextSegments} />
-      <button onClick={() => setCurrentSegmentIndex(0)} disabled={fileTextSegments.length === 0}>
-        Convert to Speech
-      </button>
+    <div className="container">
+      <div className="section">
+        <h2>Text to Speech</h2>
+        <TextInput setFileTextSegments={setFileTextSegments} />
+        <div className="button-container">
+          <button onClick={() => setCurrentSegmentIndex(0)} disabled={fileTextSegments.length === 0}>
+            <i className="fas fa-play"></i> Convert to Speech
+          </button>
+        </div>
+      </div>
 
-      <h2>Ask Question</h2>
-      <button
-        onClick={toggleRecording}
-        style={{
-          backgroundColor: isRecording ? 'red' : 'gray',
-          color: 'white',
-          padding: '10px 20px',
-          border: 'none',
-          cursor: 'pointer',
-        }}
-      >
-        {isRecording ? 'Recording...' : 'Ask Question'}
-      </button>
+      <div className="section">
+        <h2>Ask Question</h2>
+        <div className="button-container">
+          <button
+            onClick={toggleRecording}
+            className={isRecording ? 'recording' : ''}
+          >
+            <i className={isRecording ? 'fas fa-microphone-slash' : 'fas fa-microphone'}></i> {isRecording ? 'Recording...' : 'Ask Question'}
+          </button>
+        </div>
+      </div>
+
       <audio ref={audioRef} controls style={{ display: 'none' }} />
       <TranscriptDisplay transcript={transcript} currentSegmentIndex={currentSegmentIndex} fileTextSegments={fileTextSegments} />
       {showPopup && (

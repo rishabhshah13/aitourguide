@@ -1,0 +1,27 @@
+/* src/styles/colors.css */
+:root {
+  --primary-color: #3498db; /* Example: Blue */
+  --secondary-color: #2ecc71; /* Example: Green */
+  --background-color: #ecf0f1; /* Example: Light Grey */
+  --text-color: #2c3e50; /* Example: Dark Grey */
+  --accent-color: #e74c3c; /* Example: Red */
+}
+
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  font-family: 'Arial', sans-serif;
+}
+
+button {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: var(--secondary-color);
+}
