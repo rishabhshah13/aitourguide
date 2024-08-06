@@ -19,25 +19,26 @@ const DeepgramTTS = () => {
   const [currentSegmentIndex, setCurrentSegmentIndex] = useState(-1);
   const [isPlaying, setIsPlaying] = useState(false);
   const [askQuestionInProgress, setAskQuestionInProgress] = useState(false);
-  const [showPopup, setShowPopup] = useState(false); 
-  const [showAskQuestionButton, setShowAskQuestionButton] = useState(false); // New state for showing the button
+  const [showPopup, setShowPopup] = useState(false);
+  const [showAskQuestionButton, setShowAskQuestionButton] = useState(false);
+  const [tourPaused, setTourPaused] = useState(false);
   const audioRef = useRef(null);
   const apiKey = process.env.REACT_APP_DEEPGRAM_API_KEY;
   const [originalTTSUrls, setOriginalTTSUrls] = useState([]);
   const [originalTTSIndex, setOriginalTTSIndex] = useState(0);
 
   useEffect(() => {
-    if (currentSegmentIndex >= 0 && currentSegmentIndex < fileTextSegments.length && !isPlaying && !askQuestionInProgress) {
+    if (currentSegmentIndex >= 0 && currentSegmentIndex < fileTextSegments.length && !isPlaying && !askQuestionInProgress && !tourPaused) {
       handleTTS(fileTextSegments[currentSegmentIndex]);
     }
-  }, [currentSegmentIndex, isPlaying, askQuestionInProgress]);
+  }, [currentSegmentIndex, isPlaying, askQuestionInProgress, tourPaused]);
 
   const handleTTS = async (segment) => {
     const audioBlob = await TextToSpeech(segment, apiKey);
     if (audioBlob) {
       const audioUrl = URL.createObjectURL(audioBlob);
       setAudioUrl(audioUrl);
-      setOriginalTTSUrls(prevUrls => [...prevUrls, audioUrl]); 
+      setOriginalTTSUrls(prevUrls => [...prevUrls, audioUrl]);
       setOriginalTTSIndex(originalTTSUrls.length);
       if (audioRef.current) {
         audioRef.current.src = audioUrl;
@@ -73,7 +74,7 @@ const DeepgramTTS = () => {
           audioRef.current.src = answerAudioUrl;
           audioRef.current.onended = () => {
             setAskQuestionInProgress(false);
-            setShowPopup(true); 
+            setShowPopup(true);
           };
           audioRef.current.play();
           setAskQuestionInProgress(true);
@@ -105,35 +106,50 @@ const DeepgramTTS = () => {
     setIsPlaying(false);
   };
 
+  const handleStartTour = () => {
+    setCurrentSegmentIndex(0);
+    setShowAskQuestionButton(true);
+    setTourPaused(false);
+  };
+
+  const handlePauseTour = () => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+      setIsPlaying(false);
+      setTourPaused(true);
+    }
+  };
+
   return (
     <div className="container">
       <div className="section">
-        <h2>Text to Speech</h2>
         <TextInput setFileTextSegments={setFileTextSegments} />
         <div className="button-container">
-          <button onClick={() => { setCurrentSegmentIndex(0); setShowAskQuestionButton(true); }} disabled={fileTextSegments.length === 0}>
-            <i className="fas fa-play"></i> Convert to Speech
-          </button>
+          {!showAskQuestionButton && (
+            <button onClick={handleStartTour} disabled={fileTextSegments.length === 0}>
+              <i className="fas fa-play"></i> Start Tour
+            </button>
+          )}
+          {showAskQuestionButton && (
+            <button onClick={handlePauseTour}>
+              <i className="fas fa-pause"></i> {tourPaused ? 'Resume Tour' : 'Pause Tour'}
+            </button>
+          )}
         </div>
       </div>
 
       <audio ref={audioRef} controls style={{ display: 'none' }} />
       <TranscriptDisplay transcript={transcript} currentSegmentIndex={currentSegmentIndex} fileTextSegments={fileTextSegments} />
-      
+
       {showAskQuestionButton && (
         <div className="ask-question-container">
-          <button
-            onClick={toggleRecording}
-            className={isRecording ? 'recording' : ''}
-          >
+          <button onClick={toggleRecording} className={isRecording ? 'recording' : ''}>
             <i className={isRecording ? 'fas fa-microphone-slash' : 'fas fa-microphone'}></i>
           </button>
         </div>
       )}
-      
-      {showPopup && (
-        <Popup message="The answer has been generated and spoken. Please review it." onClose={handlePopupClose} />
-      )}
+
+      {showPopup && <Popup message="The answer has been generated and spoken. Please review it." onClose={handlePopupClose} />}
     </div>
   );
 };
