@@ -7,7 +7,7 @@ const convertSpeechToText = async (audioFile, apiKey) => {
   try {
     const response = await axios.post(url, audioFile, {
       headers: {
-        'Authorization': `Token ${apiKey}`,
+        Authorization: `Token ${apiKey}`,
         'Content-Type': 'audio/wav',
       },
     });

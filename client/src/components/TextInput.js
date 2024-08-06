@@ -13,7 +13,10 @@ const TextInput = ({ setFileTextSegments }) => {
       const reader = new FileReader();
       reader.onload = () => {
         const text = reader.result;
-        const segments = text.split('.').map(segment => segment.trim()).filter(segment => segment);
+        const segments = text
+          .split('.')
+          .map((segment) => segment.trim())
+          .filter((segment) => segment);
         setFileTextSegments(segments);
         setFileContent(text); // Set file content to state
       };
