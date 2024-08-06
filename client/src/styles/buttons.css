@@ -49,3 +49,34 @@ button:hover {
 button:active {
   transform: translateY(0); /* Reset transform on active */
 }
+
+.ask-question-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.ask-question-container button {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.ask-question-container button:hover {
+  background-color: var(--accent-color);
+  transform: translateY(-2px);
+}
+
+.ask-question-container button.recording {
+  background-color: var(--accent-color);
+}

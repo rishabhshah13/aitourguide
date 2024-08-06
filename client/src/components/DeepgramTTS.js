@@ -1,4 +1,3 @@
-// src/components/DeepgramTTS.js
 import React, { useState, useRef, useEffect } from 'react';
 import TextInput from './TextInput';
 import TranscriptDisplay from './TranscriptDisplay';
@@ -21,6 +20,7 @@ const DeepgramTTS = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [askQuestionInProgress, setAskQuestionInProgress] = useState(false);
   const [showPopup, setShowPopup] = useState(false); 
+  const [showAskQuestionButton, setShowAskQuestionButton] = useState(false); // New state for showing the button
   const audioRef = useRef(null);
   const apiKey = process.env.REACT_APP_DEEPGRAM_API_KEY;
   const [originalTTSUrls, setOriginalTTSUrls] = useState([]);
@@ -111,26 +111,26 @@ const DeepgramTTS = () => {
         <h2>Text to Speech</h2>
         <TextInput setFileTextSegments={setFileTextSegments} />
         <div className="button-container">
-          <button onClick={() => setCurrentSegmentIndex(0)} disabled={fileTextSegments.length === 0}>
+          <button onClick={() => { setCurrentSegmentIndex(0); setShowAskQuestionButton(true); }} disabled={fileTextSegments.length === 0}>
             <i className="fas fa-play"></i> Convert to Speech
-          </button>
-        </div>
-      </div>
-
-      <div className="section">
-        <h2>Ask Question</h2>
-        <div className="button-container">
-          <button
-            onClick={toggleRecording}
-            className={isRecording ? 'recording' : ''}
-          >
-            <i className={isRecording ? 'fas fa-microphone-slash' : 'fas fa-microphone'}></i> {isRecording ? 'Recording...' : 'Ask Question'}
           </button>
         </div>
       </div>
 
       <audio ref={audioRef} controls style={{ display: 'none' }} />
       <TranscriptDisplay transcript={transcript} currentSegmentIndex={currentSegmentIndex} fileTextSegments={fileTextSegments} />
+      
+      {showAskQuestionButton && (
+        <div className="ask-question-container">
+          <button
+            onClick={toggleRecording}
+            className={isRecording ? 'recording' : ''}
+          >
+            <i className={isRecording ? 'fas fa-microphone-slash' : 'fas fa-microphone'}></i>
+          </button>
+        </div>
+      )}
+      
       {showPopup && (
         <Popup message="The answer has been generated and spoken. Please review it." onClose={handlePopupClose} />
       )}
