@@ -61,7 +61,7 @@ jobs:
       #     flake8 .
 
       - name: Run backend tests
-        working-directory: ./app
+        # working-directory: ./app
         run: pytest
 
   push:
