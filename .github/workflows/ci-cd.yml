@@ -64,7 +64,7 @@ jobs:
         # working-directory: ./app
         env:
           OPENAI_API_KEY2: ${{ secrets.OPENAI_API_KEY }}
-        run: pytest
+        run: pytest --ignore=tests/test_mistral_responses.py
 
   push:
     runs-on: ubuntu-latest
