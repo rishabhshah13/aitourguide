@@ -13,3 +13,15 @@
 1. Donwload Llamafile
 2. chmod +x mistral-7b-instruct-v0.2.Q4_0.llamafile
 3. ./mistral-7b-instruct-v0.2.Q4_0.llamafile --server --host 0.0.0.0 --port 8080
+
+
+
+# TODO: 
+1. Add Tests
+   1. Model Latency?
+   2. Model Connection?
+2. Add one more model
+   1. Try to run the llamafile while selecting the model and not initially
+3. Add Properly Constructed prompts
+4. Add Data
+5. Add Architecture Diagram
