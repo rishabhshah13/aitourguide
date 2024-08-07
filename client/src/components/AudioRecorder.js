@@ -1,10 +1,11 @@
 // src/components/AudioRecorder.js
 import MicRecorder from 'mic-recorder-to-mp3';
 
-const recorder = new MicRecorder({ bitRate: 128 });
+let recorder;
 
-const startRecording = async () => {
+export const startRecording = async () => {
   try {
+    recorder = new MicRecorder();
     await recorder.start();
     return true;
   } catch (error) {
@@ -13,14 +14,39 @@ const startRecording = async () => {
   }
 };
 
-const stopRecording = async () => {
+export const stopRecording = async () => {
   try {
-    const [buffer, blob] = await recorder.stop().getMp3();
-    return { buffer, blob };
+    const { blob, buffer } = await recorder.stop();
+    return { blob, buffer };
   } catch (error) {
     console.error('Error stopping recording:', error);
-    return { buffer: null, blob: null };
+    return { blob: null, buffer: null };
   }
 };
 
-export { startRecording, stopRecording };
+// // src/components/AudioRecorder.js
+// import MicRecorder from 'mic-recorder-to-mp3';
+
+// const recorder = new MicRecorder({ bitRate: 128 });
+
+// const startRecording = async () => {
+//   try {
+//     await recorder.start();
+//     return true;
+//   } catch (error) {
+//     console.error('Error starting recording:', error);
+//     return false;
+//   }
+// };
+
+// const stopRecording = async () => {
+//   try {
+//     const [buffer, blob] = await recorder.stop().getMp3();
+//     return { buffer, blob };
+//   } catch (error) {
+//     console.error('Error stopping recording:', error);
+//     return { buffer: null, blob: null };
+//   }
+// };
+
+// export { startRecording, stopRecording };
