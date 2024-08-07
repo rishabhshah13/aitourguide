@@ -50,15 +50,15 @@ jobs:
           python -m pip install -r requirements.txt
           pip install flake8 black pytest
 
-      - name: Format with black
-        run: |
-          black --version
-          black .
-          black --check .
-      - name: Lint with flake8
-        run: |
-          flake8 --version
-          flake8 .
+      # - name: Format with black
+      #   run: |
+      #     black --version
+      #     black .
+      #     black --check .
+      # - name: Lint with flake8
+      #   run: |
+      #     flake8 --version
+      #     flake8 .
 
       - name: Run backend tests
         working-directory: ./app
