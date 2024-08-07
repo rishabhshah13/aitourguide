@@ -1,11 +1,11 @@
-// src/components/TextInput.js
 import React, { useRef, useState } from 'react';
 import '../styles/textinput.css'; // Ensure this import is included
 
-const TextInput = ({ setFileTextSegments }) => {
+const TextInput = ({ setFileTextSegments, setSelectedOption }) => {
   const fileInputRef = useRef(null);
   const [buttonVisible, setButtonVisible] = useState(true);
   const [fileContent, setFileContent] = useState('');
+  const [selectedOption, setSelectedOptionState] = useState('GPT4o'); // Default option
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -29,12 +29,28 @@ const TextInput = ({ setFileTextSegments }) => {
     fileInputRef.current.click();
   };
 
+  const handleDropdownChange = (e) => {
+    const option = e.target.value;
+    setSelectedOption(option);
+    setSelectedOptionState(option);
+  };
+
   return (
     <div className="text-input-container">
       {buttonVisible && (
-        <button onClick={handleButtonClick} className="add-tour-guide-button">
-          Add Tour Guide
-        </button>
+        <div className="button-dropdown-container">
+          <button onClick={handleButtonClick} className="add-tour-guide-button">
+            Add Tour Guide
+          </button>
+          <select
+            value={selectedOption}
+            onChange={handleDropdownChange}
+            className="dropdown-menu"
+          >
+            <option value="GPT4o">GPT4o</option>
+            <option value="Mistral">Mistral</option>
+          </select>
+        </div>
       )}
       <input
         type="file"

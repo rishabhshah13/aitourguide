@@ -7,7 +7,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from dotenv import load_dotenv
 
-load_dotenv()
+load_dotenv('../../.env')
 
 from openai import OpenAI
 
@@ -27,9 +27,22 @@ app.add_middleware(
 
 class Query(BaseModel):
     question: str
+    model: str
 
-@app.post("/chatgpt")
+
+@app.post("/get_response")
 async def get_response(query: Query):
+    model = query.model
+
+    if model == 'GPT4o':
+        return await get_gpt4o_response(query)
+    elif model == 'Mistral':
+        return await get_mistral_response(query)
+
+
+
+# @app.post("/chatgpt")
+async def get_gpt4o_response(query: Query):
     completion = client.chat.completions.create(
     model="gpt-4o-mini-2024-07-18",
     messages=[
@@ -40,8 +53,8 @@ async def get_response(query: Query):
     return {"answer": completion.choices[0].message}
 
 
-@app.post("/mistral")
-async def get_response(query: Query):
+# @app.post("/mistral")
+async def get_mistral_response(query: Query):
 
     client = OpenAI(
         base_url="http://localhost:8080/v1", # "http://<Your api-server IP>:port"
@@ -55,4 +68,3 @@ async def get_response(query: Query):
         ]
     )
     return {"answer": completion.choices[0].message}
-    # print(completion.choices[0].message)

@@ -1,10 +1,13 @@
 // src/components/LLMIntegration.js
 import axios from 'axios';
 
-const fetchLLMResponse = async (question) => {
+const fetchLLMResponse = async (question, model) => {
   try {
-    const response = await axios.post('http://localhost:8000/mistral', {
+    console.log(question, model);
+
+    const response = await axios.post(`http://localhost:8000/get_response`, {
       question,
+      model,
     });
     return response.data.answer.content;
   } catch (error) {

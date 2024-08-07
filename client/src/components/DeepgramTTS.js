@@ -21,6 +21,7 @@ const DeepgramTTS = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [showAskQuestionButton, setShowAskQuestionButton] = useState(false);
   const [tourPaused, setTourPaused] = useState(false);
+  const [selectedOption, setSelectedOption] = useState('GPT4o'); // Default option
   const audioRef = useRef(null);
   const apiKey = process.env.REACT_APP_DEEPGRAM_API_KEY;
 
@@ -78,7 +79,7 @@ const DeepgramTTS = () => {
       );
       setTranscript(transcriptText);
 
-      const answer = await fetchLLMResponse(transcriptText);
+      const answer = await fetchLLMResponse(transcriptText, selectedOption);
 
       const answerAudioBlob = await TextToSpeech(answer, apiKey);
       if (answerAudioBlob) {
@@ -136,7 +137,10 @@ const DeepgramTTS = () => {
   return (
     <div className="container">
       <div className="section">
-        <TextInput setFileTextSegments={setFileTextSegments} />
+        <TextInput
+          setFileTextSegments={setFileTextSegments}
+          setSelectedOption={setSelectedOption}
+        />
         <div className="button-container">
           {!showAskQuestionButton && (
             <button

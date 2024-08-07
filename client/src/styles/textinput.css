@@ -1,7 +1,7 @@
 /* src/styles/textinput.css */
 .text-input-container {
-  position: relative;
-  margin-top: 20px;
+  display: flex;
+  align-items: center;
 }
 
 .add-tour-guide-button {
@@ -35,4 +35,18 @@
 .file-content-box pre {
   white-space: pre-wrap; /* Preserve whitespace formatting */
   word-wrap: break-word; /* Break long words to fit container */
+}
+
+
+
+.button-dropdown-container {
+  display: flex;
+  align-items: center;
+}
+
+.dropdown-menu {
+  padding: 5px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
