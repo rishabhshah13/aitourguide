@@ -14,13 +14,13 @@ RUN npm install
 COPY . .
 
 # Debugging step: List the contents of /app
-RUN ls -la /app
+# RUN ls -la /app
 
 # Build the React application
 RUN npm run build
 
 # Debugging step: List the contents of /app/build
-RUN ls -la /app/build
+# RUN ls -la /app/build
 
 # Stage 2: Serve the React application using Nginx
 FROM nginx:alpine
