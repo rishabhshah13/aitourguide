@@ -7,3 +7,9 @@
     npm install --save --save-exact react-scripts@latest --force
 4. docker tag client:latest rishabhshah13/client:latest
 5. docker tag app:latest rishabhshah13/app:latest
+
+
+# Llama File
+1. Donwload Llamafile
+2. chmod +x mistral-7b-instruct-v0.2.Q4_0.llamafile
+3. ./mistral-7b-instruct-v0.2.Q4_0.llamafile --server --host 0.0.0.0 --port 8080

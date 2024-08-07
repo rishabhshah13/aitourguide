@@ -3,7 +3,7 @@ import TextInput from './TextInput';
 import TranscriptDisplay from './TranscriptDisplay';
 import { startRecording, stopRecording } from './AudioRecorder';
 import convertSpeechToText from './SpeechToText';
-import fetchChatGptResponse from './ChatGPTIntegration';
+import fetchLLMResponse from './LLMIntegration';
 import TextToSpeech from './TextToSpeech';
 import Popup from './Popup';
 import '../styles/colors.css';
@@ -78,7 +78,7 @@ const DeepgramTTS = () => {
       );
       setTranscript(transcriptText);
 
-      const answer = await fetchChatGptResponse(transcriptText);
+      const answer = await fetchLLMResponse(transcriptText);
 
       const answerAudioBlob = await TextToSpeech(answer, apiKey);
       if (answerAudioBlob) {

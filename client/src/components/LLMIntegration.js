@@ -1,9 +1,9 @@
-// src/components/ChatGPTIntegration.js
+// src/components/LLMIntegration.js
 import axios from 'axios';
 
-const fetchChatGptResponse = async (question) => {
+const fetchLLMResponse = async (question) => {
   try {
-    const response = await axios.post('http://localhost:8000/chatgpt', {
+    const response = await axios.post('http://localhost:8000/mistral', {
       question,
     });
     return response.data.answer.content;
@@ -13,4 +13,4 @@ const fetchChatGptResponse = async (question) => {
   }
 };
 
-export default fetchChatGptResponse;
+export default fetchLLMResponse;
