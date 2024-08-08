@@ -132,6 +132,11 @@ const DeepgramTTS = () => {
       setIsPlaying(false);
       setTourPaused(true);
     }
+    if (tourPaused == true) {
+      audioRef.current.play();
+      setTourPaused(false);
+      setIsPlaying(true);
+    }
   };
 
   return (
