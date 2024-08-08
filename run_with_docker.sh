@@ -9,6 +9,8 @@ EOF
 cp .env client/.env
 cp .env app/.env
 
+cp .env app/.env
+
 
 # create llamafile folder
 mkdir llamafile
