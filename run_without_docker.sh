@@ -6,6 +6,8 @@ REACT_APP_DEEPGRAM_API_KEY=your_deepgram_api_key
 OPENAI_API_KEY2=your_openai_api_key
 EOF
 
+cp .env client/.env
+
 # create llamafile folder
 mkdir llamafile
 
