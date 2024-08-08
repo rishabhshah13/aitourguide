@@ -16,7 +16,7 @@ wget https://huggingface.co/Mozilla/Mistral-7B-Instruct-v0.2-llamafile/resolve/m
 
 # run llamafile
 chmod +x llamafile/mistral-7b-instruct-v0.2.Q4_0.llamafile
-./mistral-7b-instruct-v0.2.Q4_0.llamafile &
+llamafile/mistral-7b-instruct-v0.2.Q4_0.llamafile &
 
 # Install frontend dependencies
 cd client

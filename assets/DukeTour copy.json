@@ -1,7 +1,7 @@
 [
   {
     "place": "Engineering Quad",
-    "script": "Welcome to the Engineering Quad, or 'E-Quad,' at the Pratt School of Engineering. This central quadrangle houses various buildings and resources for engineering students. On the east side, you'll find the Fitzpatrick Center for Interdisciplinary Engineering, Medicine and Allied Sciences (FCIEMAS), which includes laboratories and Twinnie's Café. <<image [/assets/DukeTourImages/engineering_quad_1.jpeg] >> The Innovation Co-Lab and Levine Science Research Center (LSRC) within this quad offer spaces for creativity and prototyping, supporting students in their engineering endeavors. <<image [/assets/DukeTourImages/engineering_quad_2.jpeg] >>"
+    "script": "Welcome to the Engineering Quad house millions of volumes and offer accessible house millions of volumes and offer accessible <<image [/assets/DukeTourImages/engineering_quad_2.jpeg] >>"
   },
   {
     "place": "Perkins, Rubenstein, and Bostock Libraries",
