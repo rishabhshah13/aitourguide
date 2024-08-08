@@ -132,3 +132,12 @@ Unit tests for core functionalities are located in the `/tests` folder. To run t
   ```bash
   pytest
   ```
+## Acknowledgments
+
+Special thanks to the following resources for inspiring the development of this application:
+
+- [YouVisit Duke Tour](https://www.youvisit.com/tour/duke)
+- [Duke Tour App](https://duke.stqry.app/)
+
+These applications provided the idea and motivation for creating this virtual tour guide application.
+
