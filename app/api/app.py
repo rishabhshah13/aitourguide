@@ -16,7 +16,6 @@ from typing import List
 
 # Initialize OpenAI client with API key from environment variables
 
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY2"))
 
 # Create a FastAPI instance
 app = FastAPI()
@@ -134,7 +133,7 @@ async def get_gpt4o_response(query: Query):
     The response is generated using OpenAI's GPT-4o model and includes the system prompt and user question.
     """
     # Create a chat completion request to OpenAI's GPT-4o model
-    print(system_prompt)
+    client = OpenAI(api_key=os.getenv("OPENAI_API_KEY2"))
     completion = client.chat.completions.create(
         model="gpt-4o-mini-2024-07-18",
         messages=[
@@ -146,7 +145,6 @@ async def get_gpt4o_response(query: Query):
         ],
     )
     # Print the response for debugging purposes
-    print({"answer": completion.choices[0].message})
     # Return the answer from GPT-4o
     return {"answer": completion.choices[0].message}
 
@@ -158,8 +156,6 @@ async def upload_segments(segments: List[str]):
         # Process the segments received
         # You can perform various operations like saving to a file, database, etc.
         system_prompt['content'] = system_prompt['content'] + ' '.join(segments)
-        # print(' '.join(tour_data))
-        # print(system_prompt + ' '.join(tour_data))
         # Return a success response
         return JSONResponse(content={"message": "Segments received successfully"}, status_code=200)
     
