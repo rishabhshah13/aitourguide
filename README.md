@@ -1,7 +1,3 @@
-Here's the updated README with instructions on how to run the project both with and without Docker:
-
----
-
 # Virtual Tour Guide
 
 [![CI/CD Pipeline](https://github.com/rishabhshah13/aitourguide/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/rishabhshah13/aitourguide/actions/workflows/ci-cd.yml)
