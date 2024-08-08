@@ -95,7 +95,7 @@ If you want to setup/run manually refer [this](./ManualSetup.md)
 
 **In-Tour Screen with option to Pause**
 ![Frontend Screenshot](assets/Readmeimages/4.jpeg)
-When you press the question button, hold on until the AI completes its current section. Once it's finished, the button will turn red, signaling that it's your turn to ask a question.
+Hold on a moment after pressing the question button; once the AI finishes its current segment, the button will turn red, signaling it's time for your question.
 
 **After Question Popup**
 ![Frontend Screenshot](assets/Readmeimages/5.jpeg)
