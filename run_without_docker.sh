@@ -7,6 +7,8 @@ OPENAI_API_KEY2=your_openai_api_key
 EOF
 
 cp .env client/.env
+cp .env app/.env
+
 
 # create llamafile folder
 mkdir llamafile

@@ -10,7 +10,6 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.responses import JSONResponse
 
 # Load environment variables from the .env file
-load_dotenv("../../.env")
 from typing import List
 
 
