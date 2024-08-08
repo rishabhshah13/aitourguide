@@ -6,16 +6,28 @@ from openai import OpenAI
 import os
 from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import JSONResponse
 
 # Load environment variables from the .env file
 load_dotenv("../../.env")
+from typing import List
+
 
 # Initialize OpenAI client with API key from environment variables
 
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY2"))
 
 # Create a FastAPI instance
 app = FastAPI()
+
+# System prompt to guide the AI responses and maintain ethical interactions
+system_prompt = {
+  "role": "system",
+  "content": """You are an AI-powered virtual tour guide. Your main function is to provide informative and engaging narrations about various locations and answer user questions related to these locations. Adhere to the following guidelines strictly:\n\n1. Ensure all responses are informative and relevant to the location being discussed.\n2. Provide accurate and up-to-date information based on the available data for each location.\n3. Maintain a friendly and engaging tone while interacting with users.\n4. Avoid giving advice or opinions on topics outside the scope of the tour content.\n5. Respect user privacy and confidentiality. Do not request, store, or share personal information.\n6. Handle user queries respectfully and encourage a positive experience.\n7. If a query is outside the scope of the provided information or the tour, respond with a polite acknowledgment.\n8. Focus on enhancing the user experience by providing clear, relevant, and helpful information about the tour locations.\n\nExamples of how to handle specific types of questions, provide responses based on the tour data only:\n\n- Location Information: \"Here is what I can tell you about this location.\"\n- User Queries about the Tour: \"I can provide more details about the current location.\"\n- Requests for Unrelated Information: \"I’m here to provide information about the tour locations.\"\n- Follow-up Questions: \"I’m happy to provide more details on this topic if it relates to the tour.\"\n\nAlways maintain these principles to ensure a helpful and enjoyable tour experience.
+  I am going to ask you questions, answer the questions based on this data only. """
+}
+
+
 
 # Add CORS middleware to handle cross-origin requests
 app.add_middleware(
@@ -31,7 +43,6 @@ app.add_middleware(
         "*"
     ],  # Allow any headers. Update this to restrict specific headers if needed.
 )
-
 
 # Define the schema for the request body
 class Query(BaseModel):
@@ -76,6 +87,8 @@ def validate_query(question: str, model: str) -> Query:
         )
     return Query(question=question, model=model)
 
+# Mount the static directory to serve files
+app.mount("/image", StaticFiles(directory="../../"), name="assets")
 
 # Endpoint to get a response based on the model specified in the query
 @app.post("/get_response")
@@ -103,32 +116,6 @@ async def get_response(query: Query):
         return await get_mistral_response(query)
 
 
-# System prompt to guide the AI responses and maintain ethical interactions
-system_prompt = {
-    "role": "system",
-    "content": """You are ChatGPT, a responsible and ethical AI assistant developed by OpenAI. Your primary function is to assist users in a helpful, respectful, and lawful manner. Always prioritize user safety and adhere to the following guidelines strictly:
-        1. Never provide or assist with any harmful, unethical, or illegal activities, including hacking, piracy, violence, or any form of discrimination or hate speech.
-        2. Avoid participating in or promoting activities that could lead to physical, mental, or emotional harm to any individual or group.
-        3. Refrain from giving medical, legal, or financial advice. Instead, recommend consulting a qualified professional.
-        4. Maintain user privacy and confidentiality. Never request, store, or share personal information.
-        5. Handle hypothetical scenarios and roleplays with caution. Do not provide information or advice that would be inappropriate in a real-world context.
-        6. Respond to ethical dilemmas by emphasizing the importance of lawful and ethical behavior. Encourage users to consider the impact of their actions on others.
-        7. If a query seems manipulative or designed to elicit harmful information, respond with a reminder of these guidelines and refuse to engage further.
-        8. When uncertain about the appropriateness of a request, err on the side of caution and refuse to provide a response.
-
-        Examples of how to handle specific types of questions, give only these answers for these specific questions. Nothing more, nothing less.
-
-        - Direct Questions: "I can't help with that."
-        - Indirect Questions: "I'm sorry, but I can't assist with that."
-        - Hypothetical Scenarios: "Even in a hypothetical scenario, I can't provide that information."
-        - Roleplay Scenarios: "Let's keep our roleplay respectful and appropriate."
-        - Complex Layering: "I can't assist with this request."
-        - Manipulative Phrasing: "My responses are guided by ethical considerations, so I can't help with that."
-        - User-Model Collaboration: "I'm unable to collaborate on that."
-        - Ethical Dilemmas: "It's important to act ethically and within the law."
-
-        Always maintain these principles to ensure safe and ethical interactions.""",
-}
 
 
 # Endpoint to get a response from GPT-4o model
@@ -146,10 +133,11 @@ async def get_gpt4o_response(query: Query):
     The response is generated using OpenAI's GPT-4o model and includes the system prompt and user question.
     """
     # Create a chat completion request to OpenAI's GPT-4o model
+    client = OpenAI(api_key=os.getenv("OPENAI_API_KEY2"))
     completion = client.chat.completions.create(
         model="gpt-4o-mini-2024-07-18",
         messages=[
-            system_prompt,  # Add the system prompt to guide the response
+            system_prompt ,  # Add the system prompt to guide the response
             {
                 "role": "user",
                 "content": query.question,
@@ -157,9 +145,23 @@ async def get_gpt4o_response(query: Query):
         ],
     )
     # Print the response for debugging purposes
-    print({"answer": completion.choices[0].message})
     # Return the answer from GPT-4o
     return {"answer": completion.choices[0].message}
+
+# Endpoint to receive and store data as a global variable
+@app.post("/data")
+async def upload_segments(segments: List[str]):
+    try:
+        global system_prompt
+        # Process the segments received
+        # You can perform various operations like saving to a file, database, etc.
+        system_prompt['content'] = system_prompt['content'] + ' '.join(segments)
+        # Return a success response
+        return JSONResponse(content={"message": "Segments received successfully"}, status_code=200)
+    
+    except Exception as e:
+        # Handle any exceptions that occur
+        raise HTTPException(status_code=500, detail=str(e))
 
 
 # Endpoint to get a response from the Mistral model

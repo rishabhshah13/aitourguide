@@ -10,10 +10,10 @@ EOF
 mkdir llamafile
 
 # Download and set up the Llama file
-wget https://your-llama-file-link.com -O llamafile
+wget https://huggingface.co/Mozilla/Mistral-7B-Instruct-v0.2-llamafile/resolve/main/mistral-7b-instruct-v0.2.Q4_0.llamafile?download=true -O llamafile/mistral-7b-instruct-v0.2.Q4_0.llamafile
 
 # run llamafile
-chmod +x mistral-7b-instruct-v0.2.Q4_0.llamafile
+chmod +x llamafile/mistral-7b-instruct-v0.2.Q4_0.llamafile
 ./mistral-7b-instruct-v0.2.Q4_0.llamafile &
 
 # Run Docker Compose

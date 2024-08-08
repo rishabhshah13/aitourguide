@@ -1,8 +1,37 @@
 /* src/styles/textinput.css */
+
 .text-input-container {
   display: flex;
+  flex-direction: column;
   align-items: center;
+  justify-content: center;
+  gap: 20px;
+  /* margin-top: 40px; */
+  font-size: 18px;
+  font-family: 'Arial', sans-serif; /* Change the font here */
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f8f8f8;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  height: 900px;
 }
+
+
+.image-container {
+  display: flex;
+  justify-content: center;
+  margin: 10px 0;
+}
+
+.image-container img {
+  max-width: 70%;
+  height: auto;
+  border: 5px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
 
 .add-tour-guide-button {
   background-color: var(--primary-color);
@@ -15,11 +44,23 @@
     background-color 0.3s ease,
     transform 0.3s ease;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  font-size: 16px;
+  text-align: center;
+  width: 200px; /* Set a fixed width */
 }
 
 .add-tour-guide-button:hover {
   background-color: var(--accent-color);
   transform: translateY(-2px);
+}
+
+.dropdown-menu {
+  padding: 10px 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+  text-align: center;
+  width: 200px; /* Match the width of the button */
 }
 
 .file-content-box {
@@ -28,7 +69,7 @@
   border: 1px solid var(--border-color);
   border-radius: 8px;
   background-color: var(--background-color);
-  max-height: 300px;
+  max-height: 900px;
   overflow-y: auto;
 }
 
@@ -39,12 +80,19 @@
 
 .button-dropdown-container {
   display: flex;
+  flex-direction: column;
   align-items: center;
+  gap: 10px;
 }
 
-.dropdown-menu {
-  padding: 5px;
+.dropdown-container {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Adds distance between the label and the dropdown */
+}
+
+.dropdown-label {
   font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  font-weight: bold;
+  color: var(--primary-color);
 }

@@ -18,7 +18,7 @@
 
 # TODO: 
 1. Add Tests
-      1. Check audiorecorder code for funtionality, made changes there.
+      1. Check audiorecorder code for funtionality, made changes there.  >> This is fail as I made changes
 2. Add one more model
    1. Try to run the llamafile while selecting the model and not initially
 <!-- 3. Add Properly Constructed prompts -->
