@@ -1,9 +1,9 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import TextInput from './TextInput';
 import TranscriptDisplay from './TranscriptDisplay';
 import { startRecording, stopRecording } from './AudioRecorder';
 import convertSpeechToText from './SpeechToText';
-import fetchChatGptResponse from './ChatGPTIntegration';
+import fetchLLMResponse from './LLMIntegration';
 import TextToSpeech from './TextToSpeech';
 import Popup from './Popup';
 import '../styles/colors.css';
@@ -12,7 +12,6 @@ import '../styles/buttons.css';
 import '../styles/text.css';
 
 const DeepgramTTS = () => {
-  const [audioUrl, setAudioUrl] = useState(null);
   const [isRecording, setIsRecording] = useState(false);
   const [transcript, setTranscript] = useState('');
   const [fileTextSegments, setFileTextSegments] = useState([]);
@@ -22,54 +21,69 @@ const DeepgramTTS = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [showAskQuestionButton, setShowAskQuestionButton] = useState(false);
   const [tourPaused, setTourPaused] = useState(false);
+  const [selectedOption, setSelectedOption] = useState('GPT4o'); // Default option
   const audioRef = useRef(null);
   const apiKey = process.env.REACT_APP_DEEPGRAM_API_KEY;
-  const [originalTTSUrls, setOriginalTTSUrls] = useState([]);
-  const [originalTTSIndex, setOriginalTTSIndex] = useState(0);
+
+  const handleTTS = useCallback(
+    async (segment) => {
+      const audioBlob = await TextToSpeech(segment, apiKey);
+      if (audioBlob) {
+        const audioUrl = URL.createObjectURL(audioBlob);
+        if (audioRef.current) {
+          audioRef.current.src = audioUrl;
+          audioRef.current.onended = () => {
+            setIsPlaying(false);
+            if (currentSegmentIndex < fileTextSegments.length - 1) {
+              setCurrentSegmentIndex(currentSegmentIndex + 1);
+            } else {
+              setCurrentSegmentIndex(-1);
+            }
+          };
+          setIsPlaying(true);
+          await audioRef.current.play();
+        }
+      }
+    },
+    [apiKey, currentSegmentIndex, fileTextSegments.length]
+  );
 
   useEffect(() => {
-    if (currentSegmentIndex >= 0 && currentSegmentIndex < fileTextSegments.length && !isPlaying && !askQuestionInProgress && !tourPaused) {
+    if (
+      currentSegmentIndex >= 0 &&
+      currentSegmentIndex < fileTextSegments.length &&
+      !isPlaying &&
+      !askQuestionInProgress &&
+      !tourPaused
+    ) {
       handleTTS(fileTextSegments[currentSegmentIndex]);
     }
-  }, [currentSegmentIndex, isPlaying, askQuestionInProgress, tourPaused]);
-
-  const handleTTS = async (segment) => {
-    const audioBlob = await TextToSpeech(segment, apiKey);
-    if (audioBlob) {
-      const audioUrl = URL.createObjectURL(audioBlob);
-      setAudioUrl(audioUrl);
-      setOriginalTTSUrls(prevUrls => [...prevUrls, audioUrl]);
-      setOriginalTTSIndex(originalTTSUrls.length);
-      if (audioRef.current) {
-        audioRef.current.src = audioUrl;
-        audioRef.current.onended = () => {
-          setIsPlaying(false);
-          if (currentSegmentIndex < fileTextSegments.length - 1) {
-            setCurrentSegmentIndex(currentSegmentIndex + 1);
-          } else {
-            setCurrentSegmentIndex(-1);
-          }
-        };
-        setIsPlaying(true);
-        await audioRef.current.play();
-      }
-    }
-  };
+  }, [
+    currentSegmentIndex,
+    isPlaying,
+    askQuestionInProgress,
+    tourPaused,
+    fileTextSegments,
+    handleTTS,
+  ]);
 
   const toggleRecording = async () => {
     if (isRecording) {
       const { buffer, blob } = await stopRecording();
+      console.log(blob);
       setIsRecording(false);
 
-      const transcriptText = await convertSpeechToText(new File(buffer, 'recording.wav', { type: 'audio/wav' }), apiKey);
+      const transcriptText = await convertSpeechToText(
+        new File(buffer, 'recording.wav', { type: 'audio/wav' }),
+        apiKey
+      );
       setTranscript(transcriptText);
 
-      const answer = await fetchChatGptResponse(transcriptText);
+      const answer = await fetchLLMResponse(transcriptText, selectedOption);
 
       const answerAudioBlob = await TextToSpeech(answer, apiKey);
       if (answerAudioBlob) {
         const answerAudioUrl = URL.createObjectURL(answerAudioBlob);
-        setAudioUrl(answerAudioUrl);
         if (audioRef.current) {
           audioRef.current.src = answerAudioUrl;
           audioRef.current.onended = () => {
@@ -123,33 +137,56 @@ const DeepgramTTS = () => {
   return (
     <div className="container">
       <div className="section">
-        <TextInput setFileTextSegments={setFileTextSegments} />
+        <TextInput
+          setFileTextSegments={setFileTextSegments}
+          setSelectedOption={setSelectedOption}
+        />
         <div className="button-container">
           {!showAskQuestionButton && (
-            <button onClick={handleStartTour} disabled={fileTextSegments.length === 0}>
+            <button
+              onClick={handleStartTour}
+              disabled={fileTextSegments.length === 0}
+            >
               <i className="fas fa-play"></i> Start Tour
             </button>
           )}
           {showAskQuestionButton && (
             <button onClick={handlePauseTour}>
-              <i className="fas fa-pause"></i> {tourPaused ? 'Resume Tour' : 'Pause Tour'}
+              <i className="fas fa-pause"></i>{' '}
+              {tourPaused ? 'Resume Tour' : 'Pause Tour'}
             </button>
           )}
         </div>
       </div>
 
       <audio ref={audioRef} controls style={{ display: 'none' }} />
-      <TranscriptDisplay transcript={transcript} currentSegmentIndex={currentSegmentIndex} fileTextSegments={fileTextSegments} />
+      <TranscriptDisplay
+        transcript={transcript}
+        currentSegmentIndex={currentSegmentIndex}
+        fileTextSegments={fileTextSegments}
+      />
 
       {showAskQuestionButton && (
         <div className="ask-question-container">
-          <button onClick={toggleRecording} className={isRecording ? 'recording' : ''}>
-            <i className={isRecording ? 'fas fa-microphone-slash' : 'fas fa-microphone'}></i>
+          <button
+            onClick={toggleRecording}
+            className={isRecording ? 'recording' : ''}
+          >
+            <i
+              className={
+                isRecording ? 'fas fa-microphone-slash' : 'fas fa-microphone'
+              }
+            ></i>
           </button>
         </div>
       )}
 
-      {showPopup && <Popup message="The answer has been generated and spoken. Please review it." onClose={handlePopupClose} />}
+      {showPopup && (
+        <Popup
+          message="The answer has been generated and spoken. Please review it."
+          onClose={handlePopupClose}
+        />
+      )}
     </div>
   );
 };

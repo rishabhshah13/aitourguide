@@ -1,0 +1,109 @@
+#0 building with "desktop-linux" instance using docker driver
+
+#1 [internal] load .dockerignore
+#1 transferring context: 2B done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile: 746B done
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/node:18
+#3 DONE 0.4s
+
+#4 [internal] load metadata for docker.io/library/nginx:alpine
+#4 DONE 0.4s
+
+#5 [stage-1 1/2] FROM docker.io/library/nginx:alpine@sha256:208b70eefac13ee9be00e486f79c695b15cef861c680527171a27d253d834be9
+#5 DONE 0.0s
+
+#6 [build 1/8] FROM docker.io/library/node:18@sha256:11b742eda0142d9ea809fad8c506cbcadb2802c7d4b32e044e6b976691df36b1
+#6 DONE 0.0s
+
+#7 [internal] load build context
+#7 transferring context: 2.43kB done
+#7 DONE 0.0s
+
+#8 [build 3/8] COPY package*.json ./
+#8 CACHED
+
+#9 [build 2/8] WORKDIR /app
+#9 CACHED
+
+#10 [build 4/8] RUN npm install
+#10 CACHED
+
+#11 [build 5/8] COPY . .
+#11 DONE 0.0s
+
+#12 [build 6/8] RUN ls -la /app
+#12 0.159 total 916
+#12 0.159 drwxr-xr-x   1 root root   4096 Aug  6 22:24 .
+#12 0.159 drwxr-xr-x   1 root root   4096 Aug  6 22:24 ..
+#12 0.159 -rw-r--r--   1 root root     69 Aug  5 00:41 .env
+#12 0.159 -rw-r--r--   1 root root    638 Aug  6 21:46 .eslintrc.json
+#12 0.159 -rw-r--r--   1 root root    310 Aug  5 00:23 .gitignore
+#12 0.159 -rw-r--r--   1 root root     52 Aug  6 20:42 .prettierrc
+#12 0.159 -rw-r--r--   1 root root    707 Aug  6 22:22 Dockerfile
+#12 0.159 -rw-r--r--   1 root root   3359 Aug  5 00:23 README.md
+#12 0.159 -rw-r--r--   1 root root    305 Aug  6 22:24 build.log
+#12 0.159 drwxr-xr-x 901 root root  36864 Aug  6 22:22 node_modules
+#12 0.159 -rw-r--r--   1 root root 844439 Aug  6 21:31 package-lock.json
+#12 0.159 -rw-r--r--   1 root root   1452 Aug  6 21:28 package.json
+#12 0.159 drwxr-xr-x   2 root root   4096 Aug  5 00:23 public
+#12 0.159 drwxr-xr-x   5 root root   4096 Aug  5 06:29 src
+#12 DONE 0.2s
+
+#13 [build 7/8] RUN npm run build
+#13 0.391 
+#13 0.391 > client@0.1.0 build
+#13 0.391 > react-scripts build
+#13 0.391 
+#13 1.325 Creating an optimized production build...
+#13 9.196 Compiled successfully.
+#13 9.196 
+#13 9.196 File sizes after gzip:
+#13 9.196 
+#13 9.207   117.95 kB  build/static/js/main.67cb64ba.js
+#13 9.207   1.04 kB    build/static/css/main.dec22f80.css
+#13 9.207 
+#13 9.207 The project was built assuming it is hosted at /.
+#13 9.207 You can control this with the homepage field in your package.json.
+#13 9.207 
+#13 9.207 The build folder is ready to be deployed.
+#13 9.207 You may serve it with a static server:
+#13 9.207 
+#13 9.208   npm install -g serve
+#13 9.208   serve -s build
+#13 9.208 
+#13 9.208 Find out more about deployment here:
+#13 9.208 
+#13 9.208   https://cra.link/deployment
+#13 9.208 
+#13 DONE 9.4s
+
+#14 [build 8/8] RUN ls -la /app/build
+#14 0.290 total 56
+#14 0.290 drwxr-xr-x 3 root root 4096 Aug  6 22:24 .
+#14 0.290 drwxr-xr-x 1 root root 4096 Aug  6 22:24 ..
+#14 0.290 -rw-r--r-- 1 root root  369 Aug  6 22:24 asset-manifest.json
+#14 0.290 -rw-r--r-- 1 root root 3870 Aug  6 22:24 favicon.ico
+#14 0.290 -rw-r--r-- 1 root root  889 Aug  6 22:24 index.html
+#14 0.290 -rw-r--r-- 1 root root 5347 Aug  6 22:24 logo192.png
+#14 0.290 -rw-r--r-- 1 root root 9664 Aug  6 22:24 logo512.png
+#14 0.290 -rw-r--r-- 1 root root  492 Aug  6 22:24 manifest.json
+#14 0.290 -rw-r--r-- 1 root root   67 Aug  6 22:24 robots.txt
+#14 0.290 drwxr-xr-x 4 root root 4096 Aug  6 22:24 static
+#14 DONE 0.3s
+
+#15 [stage-1 2/2] COPY --from=build /app/build /usr/share/nginx/html
+#15 CACHED
+
+#16 exporting to image
+#16 exporting layers done
+#16 writing image sha256:3b0bd3a85054c7a33ef60c9868013eb0fc7d58ae81fc2930ad3180dc56845031 done
+#16 naming to docker.io/library/my-react-app done
+#16 DONE 0.0s
+
+What's Next?
+  View summary of image vulnerabilities and recommendations → docker scout quickview

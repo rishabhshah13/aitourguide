@@ -1,7 +1,7 @@
 /* src/styles/textinput.css */
 .text-input-container {
-  position: relative;
-  margin-top: 20px;
+  display: flex;
+  align-items: center;
 }
 
 .add-tour-guide-button {
@@ -11,7 +11,9 @@
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.3s ease;
+  transition:
+    background-color 0.3s ease,
+    transform 0.3s ease;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
@@ -35,6 +37,14 @@
   word-wrap: break-word; /* Break long words to fit container */
 }
 
+.button-dropdown-container {
+  display: flex;
+  align-items: center;
+}
 
-
-
+.dropdown-menu {
+  padding: 5px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
