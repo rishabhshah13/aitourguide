@@ -41,7 +41,6 @@ const TextInput = ({
    *
    * @param {Event} e - The event object from the file input change event.
    */
-
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -51,8 +50,27 @@ const TextInput = ({
         const doc = nlp(text);
         const segments = doc.sentences().out('array');
 
-        setFileTextSegments(segments);
-        setFileTextSegmentsState(segments); // Set file text segments to state
+        // Parse the custom image format and replace it in the text
+        const segmentsWithImages = segments.map((segment) => {
+          return segment.replace(
+            /<<image\s+\[(.*?)\]\s+>>/g,
+            (_, imagePath) => {
+              const url = `http://localhost:8000/assets/${imagePath}`;
+              return `<img src="${url}" alt="Image" style="max-width: 100%; height: auto;" />`;
+              // return (
+              //   <img
+              //     src={process.env.PUBLIC_URL + imagePath}
+              //     alt="embedded"
+              //     style={{ maxWidth: '100%', height: 'auto' }}
+              //   />
+              // );
+              // return `<img src="/Users/rishabhshah/Desktop/ai-tour-guide/virtual-tour-guide/assets/about_the_white_house.jpeg" alt="Image" style="max-width: 100%; height: auto;"/>`;
+            }
+          );
+        });
+
+        setFileTextSegments(segmentsWithImages);
+        setFileTextSegmentsState(segmentsWithImages); // Set file text segments to state
         setFileContent(text); // Set file content to state
       };
       reader.readAsText(file);
@@ -122,9 +140,8 @@ const TextInput = ({
                           ? 'yellow'
                           : 'transparent',
                     }}
-                  >
-                    {segment}
-                  </span>
+                    dangerouslySetInnerHTML={{ __html: segment }}
+                  />
                 ))}
               </div>
             )}

@@ -6,6 +6,7 @@ from openai import OpenAI
 import os
 from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
+from fastapi.staticfiles import StaticFiles
 
 # Load environment variables from the .env file
 load_dotenv("../../.env")
@@ -76,6 +77,8 @@ def validate_query(question: str, model: str) -> Query:
         )
     return Query(question=question, model=model)
 
+# Mount the static directory to serve files
+app.mount("/assets", StaticFiles(directory="../../"), name="assets")
 
 # Endpoint to get a response based on the model specified in the query
 @app.post("/get_response")
