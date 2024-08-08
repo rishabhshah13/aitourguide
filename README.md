@@ -16,11 +16,9 @@ The Virtual Tour Guide project aims to provide an interactive and AI-powered exp
 ![alt text](assets/Architecture.svg)
 
 
-## Instructions for Setup/Running/Testing
-
 ## Running the Project
 
-**Clone the Repository**
+1. **Clone the Repository**
 
    ```bash
    git clone https://github.com/rishabhshah13/aitourguide.git
@@ -29,7 +27,7 @@ The Virtual Tour Guide project aims to provide an interactive and AI-powered exp
 
 Add DeepgramAPI key and OpenAI API key in bash script
 
-### With Docker
+2. **Run With Docker**
 
 To set up and run the project with Docker, execute the following script:
 
@@ -37,7 +35,7 @@ To set up and run the project with Docker, execute the following script:
 ./run_with_docker.sh
 ```
 
-### Without Docker
+3. **Run Without Docker**
 
 To set up and run the project without Docker, execute the following script:
 
