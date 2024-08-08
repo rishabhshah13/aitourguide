@@ -88,7 +88,7 @@ def validate_query(question: str, model: str) -> Query:
     return Query(question=question, model=model)
 
 # Mount the static directory to serve files
-app.mount("/image", StaticFiles(directory="../../"), name="assets")
+app.mount("/image", StaticFiles(directory="../assets"), name="assets")
 
 # Endpoint to get a response based on the model specified in the query
 @app.post("/get_response")
