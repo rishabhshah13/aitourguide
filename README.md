@@ -2,7 +2,7 @@
 
 [![CI/CD Pipeline](https://github.com/rishabhshah13/aitourguide/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/rishabhshah13/aitourguide/actions/workflows/ci-cd.yml)
 
-## [Demo Video](https://your-demo-video-link.com)
+## [Demo Video](https://youtu.be/uwEK3U-4VoY)
 
 ## Project Purpose
 
@@ -81,14 +81,23 @@ If you want to setup/run manually refer [this](./ManualSetup.md)
 
 ### Examples and Screenshots
 
-**Frontend Example:**
+**Welcome Screen:**
+![Frontend Screenshot](assets/Readmeimages/1.jpeg)
 
-![Frontend Screenshot](./screenshots/frontend_example.png)
+**Model selection using the dropdown:**
+![Frontend Screenshot](assets/Readmeimages/1.2.jpeg)
 
-**Backend Example:**
+**Selecting Tour:**
+![Frontend Screenshot](assets/Readmeimages/2.jpeg)
 
-![Backend Screenshot](./screenshots/backend_example.png)
+**Tour Loaded Screen**
+![Frontend Screenshot](assets/Readmeimages/3.jpeg)
 
+**In-Tour Screen with option to Pause**
+![Frontend Screenshot](assets/Readmeimages/4.jpeg)
+
+**After Question Popup**
+![Frontend Screenshot](assets/Readmeimages/5.jpeg)
 
 ## Performance/Evaluation Results
 
@@ -111,7 +120,3 @@ Unit tests for core functionalities are located in the `/tests` folder. To run t
   cd ../app
   pytest
   ```
-
-
-
-https://audio-samples.github.io/
