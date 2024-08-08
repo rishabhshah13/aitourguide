@@ -80,20 +80,10 @@ jobs:
         username: ${{ secrets.DOCKER_HUB_USERNAME }}
         password: ${{ secrets.DOCKER_HUB_PASSWORD }}
     
-    # - name: Build and push
-    #   uses: docker/build-push-action@v6
-    #   with:
-    #     push: true
-    #     tags: user/app:latest
-
     - name: Run docker-compose
       uses: hoverkraft-tech/compose-action@v2.0.1
       with:
         compose-file: "docker-compose.yml"
-
-    # - name: Push Docker images
-    #   run: |
-    #     docker-compose push
 
     - name: Lint Dockerfile
       uses: hadolint/hadolint-action@v3.1.0
