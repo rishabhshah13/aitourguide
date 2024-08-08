@@ -7,6 +7,7 @@ OPENAI_API_KEY2=your_openai_api_key
 EOF
 
 cp .env client/.env
+cp .env app/.env
 
 # create llamafile folder
 mkdir llamafile
@@ -16,7 +17,7 @@ wget https://huggingface.co/Mozilla/Mistral-7B-Instruct-v0.2-llamafile/resolve/m
 
 # run llamafile
 chmod +x llamafile/mistral-7b-instruct-v0.2.Q4_0.llamafile
-./mistral-7b-instruct-v0.2.Q4_0.llamafile &
+llamafile/mistral-7b-instruct-v0.2.Q4_0.llamafile --server --host 0.0.0.0 --port 8080 &
 
 # Install frontend dependencies
 cd client
