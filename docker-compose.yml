@@ -8,8 +8,12 @@ services:
     image: rishabhshah13/frontend:latest
     ports:
       - "3000:80"
+    environment:
+      - LLAMAFILE_SERVER=http://host.docker.internal:8080
     depends_on:
       - backend
+    networks:
+      - tourguide-network
 
   backend:
     build:
@@ -18,5 +22,13 @@ services:
     image: rishabhshah13/backend:latest
     ports:
       - "8000:8000"
+    environment:
+      - LLAMAFILE_SERVER=http://host.docker.internal:8080
     volumes:
       - ./assets/:/../../assets 
+    networks:
+      - tourguide-network
+
+networks:
+  tourguide-network:
+    name: tourguide-network

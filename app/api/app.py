@@ -10,6 +10,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.responses import JSONResponse
 
 # Load environment variables from the .env file
+# load_dotenv("../../.env")
 from typing import List
 
 
@@ -26,6 +27,7 @@ system_prompt = {
   I am going to ask you questions, answer the questions based on this data only. """
 }
 
+LLAMAFILE_SERVER = os.environ.get('LLAMAFILE_SERVER', 'http://localhost:8080')
 
 
 # Add CORS middleware to handle cross-origin requests
@@ -132,6 +134,7 @@ async def get_gpt4o_response(query: Query):
     The response is generated using OpenAI's GPT-4o model and includes the system prompt and user question.
     """
     # Create a chat completion request to OpenAI's GPT-4o model
+    load_dotenv(".env")
     client = OpenAI(api_key=os.getenv("OPENAI_API_KEY2"))
 
     completion = client.chat.completions.create(
@@ -151,13 +154,16 @@ async def get_gpt4o_response(query: Query):
 # Endpoint to receive and store data as a global variable
 @app.post("/data")
 async def upload_segments(segments: List[str]):
+
     try:
+        # await get_mistral_response(Query(question='Hello', model='Mistral'))
+
         global system_prompt
         # Process the segments received
         # You can perform various operations like saving to a file, database, etc.
         system_prompt['content'] = system_prompt['content'] + ' '.join(segments)
         # Return a success response
-        return JSONResponse(content={"message": "Segments received successfully"}, status_code=200)
+        return JSONResponse(content={"message": f"Segments received successfully {LLAMAFILE_SERVER}/v1" }, status_code=200)
     
     except Exception as e:
         # Handle any exceptions that occur
@@ -179,8 +185,9 @@ async def get_mistral_response(query: Query):
     The response is generated using the Mistral model with a specified base URL and API key.
     """
     # Initialize OpenAI client for Mistral model with a different base URL
+
     client = OpenAI(
-        base_url="http://localhost:8080/v1",  # Update with the appropriate API server URL
+        base_url=f"{LLAMAFILE_SERVER}/v1",  # Update with the appropriate API server URL
         api_key="sk-no-key-required",  # Placeholder API key
     )
     # Create a chat completion request to the Mistral model
