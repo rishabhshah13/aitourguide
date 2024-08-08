@@ -88,7 +88,7 @@ def validate_query(question: str, model: str) -> Query:
     return Query(question=question, model=model)
 
 # Mount the static directory to serve files
-app.mount("/image", StaticFiles(directory="../assets"), name="assets")
+app.mount("/image", StaticFiles(directory="../../"), name="assets")
 
 # Endpoint to get a response based on the model specified in the query
 @app.post("/get_response")
@@ -134,6 +134,7 @@ async def get_gpt4o_response(query: Query):
     """
     # Create a chat completion request to OpenAI's GPT-4o model
     client = OpenAI(api_key=os.getenv("OPENAI_API_KEY2"))
+
     completion = client.chat.completions.create(
         model="gpt-4o-mini-2024-07-18",
         messages=[
