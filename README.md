@@ -95,13 +95,26 @@ If you want to setup/run manually refer [this](./ManualSetup.md)
 
 **In-Tour Screen with option to Pause**
 ![Frontend Screenshot](assets/Readmeimages/4.jpeg)
+When you press the question button, hold on until the AI completes its current section. Once it's finished, the button will turn red, signaling that it's your turn to ask a question.
 
 **After Question Popup**
 ![Frontend Screenshot](assets/Readmeimages/5.jpeg)
 
 ## Performance/Evaluation Results
 
-The application performs efficiently with a response time of approximately 200ms for text-to-speech requests and 300ms for speech-to-text conversions. For detailed performance metrics, refer to the performance reports available [here](./performance_reports).
+The application demonstrates efficient performance, with response times around 606.01 ms for text-to-speech requests and 222.76 ms for speech-to-text conversions. For a comprehensive breakdown of performance metrics, please consult the performance reports provided [here](./tests/assets/).
+
+While running the containers, run the following commands
+
+ ```bash
+  python tests/evaluation.py 
+  ```
+
+ ```bash
+  cd client
+  npm run evaluate 
+  ```
+
 
 ## Unit Tests
 
@@ -117,6 +130,5 @@ Unit tests for core functionalities are located in the `/tests` folder. To run t
 - **Backend Tests**
 
   ```bash
-  cd ../app
   pytest
   ```
