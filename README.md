@@ -1,4 +1,4 @@
-Here's the updated README with the step to download and run a llama file:
+Here's the updated README with instructions on how to run the project both with and without Docker:
 
 ---
 
@@ -19,63 +19,38 @@ The Virtual Tour Guide project aims to provide an interactive and AI-powered exp
   
 ![alt text](assets/Architecture.svg)
 
+
 ## Instructions for Setup/Running/Testing
 
-### Setup
+## Running the Project
 
-1. **Clone the Repository**
+**Clone the Repository**
 
    ```bash
    git clone https://github.com/rishabhshah13/aitourguide.git
    cd aitourguide
    ```
 
-2. **Install Frontend Dependencies**
+Add DeepgramAPI key and OpenAI API key in bash script
 
-   ```bash
-   cd client
-   npm install
-   ```
+### With Docker
 
-3. **Install Backend Dependencies**
+To set up and run the project with Docker, execute the following script:
 
-   ```bash
-   cd ../app
-   pip install -r requirements.txt
-   ```
+```bash
+./run_with_docker.sh
+```
 
-4. **Set Up Environment Variables**
+### Without Docker
 
-   Create a `.env` file in the root directory and add the following:
+To set up and run the project without Docker, execute the following script:
 
-   ```env
-   REACT_APP_DEEPGRAM_API_KEY=your_deepgram_api_key
-   OPENAI_API_KEY2=your_openai_api_key
-   ```
+```bash
+./run_without_docker.sh
+```
 
-5. **Download and Set Up Llama File**
+If you want to setup/run manually refer [this](./ManualSetup.md)
 
-   Download the llama file from the provided link and place it in the designated directory.
-
-   ```bash
-   wget https://your-llama-file-link.com -O path/to/your/llama/file
-   ```
-
-6. **Run Docker Compose**
-
-   ```bash
-   docker-compose up
-   ```
-
-### Running
-
-1. **Start the Application**
-
-   After running Docker Compose, the frontend will be available at `http://localhost:3000`, and the backend at `http://localhost:8080`.
-
-2. **Access the Application**
-
-   Open your browser and navigate to `http://localhost:3000` to interact with the application.
 
 ### Testing
 
@@ -103,6 +78,7 @@ The Virtual Tour Guide project aims to provide an interactive and AI-powered exp
 
 ![Backend Screenshot](./screenshots/backend_example.png)
 
+
 ## Performance/Evaluation Results
 
 The application performs efficiently with a response time of approximately 200ms for text-to-speech requests and 300ms for speech-to-text conversions. For detailed performance metrics, refer to the performance reports available [here](./performance_reports).
@@ -124,5 +100,3 @@ Unit tests for core functionalities are located in the `/tests` folder. To run t
   cd ../app
   pytest
   ```
-
-Ensure all tests pass to validate the functionality of the application.
