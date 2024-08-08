@@ -18,17 +18,11 @@
 
 # TODO: 
 1. Add Tests
-   1. Model Latency ==> Not printing
-      1. Two of them are commented, fix that
-   2. Add ReactJS testing code
       1. Check audiorecorder code for funtionality, made changes there.
 2. Add one more model
    1. Try to run the llamafile while selecting the model and not initially
 <!-- 3. Add Properly Constructed prompts -->
-4. Add Data
-5. Add Architecture Diagram
-6. Remove unnecessary files like navbar and all
-
+1. Add Data
 
 Installed 
 npm install --save-dev jest @testing-library/react @testing-library/jest-dom

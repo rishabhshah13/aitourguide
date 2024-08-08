@@ -6,7 +6,22 @@
 
 ## Project Purpose
 
-The Virtual Tour Guide project aims to provide an interactive and AI-powered experience for users exploring various locations. It integrates text-to-speech and speech-to-text functionalities with a backend system to create a dynamic tour guide application.
+The AI Tour Guide project is designed to offer an interactive and AI-powered virtual tour guide experience. By integrating advanced text-to-speech (TTS) and speech-to-text (STT) functionalities, the application provides informative and engaging narrations about various locations. It allows users to interact with the guide by asking questions and receiving detailed responses, making their exploration of different places both educational and entertaining.
+
+## Motivation
+
+The motivation behind this project stems from the desire to enhance the experience of exploring new locations through technology. Traditional tour guides and static information can be limiting, and this project aims to leverage AI to create a dynamic and responsive tour guide. By using state-of-the-art natural language processing and speech synthesis technologies, the AI Tour Guide seeks to bridge the gap between digital and physical exploration, providing a richer, more interactive experience for users.
+
+## Features
+
+- **Interactive Tour Guide**: Provides real-time narrations about various locations using text-to-speech capabilities.
+- **User Interaction**: Allows users to ask questions about the location and receive relevant answers through speech-to-text and natural language processing.
+- **Easy-to-Use Interface**: Features a user-friendly interface for seamless interaction with the AI guide.
+- **Continuous Integration and Deployment**: Ensures that updates and improvements are smoothly integrated and deployed, maintaining a high-quality user experience.
+- **Backend Integration**: Utilizes a robust backend system to handle user queries and integrate with various TTS and NLP models.
+- **Frontend Design**: Implements a clean and intuitive frontend framework to facilitate user interaction and navigation.
+- **Deployment and Testing**: Includes a comprehensive deployment setup with CI/CD pipelines and thorough testing to ensure reliability and performance.
+
 
 ## Architecture Diagram
 
