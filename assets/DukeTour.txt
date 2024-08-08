@@ -1,0 +1,26 @@
+[
+  {
+    "place": "Engineering Quad (E-Quad)",
+    "script": "Welcome to the Engineering Quad, or 'E-Quad,' at the Pratt School of Engineering. This central quadrangle houses various buildings and resources for engineering students. On the east side, you'll find the Fitzpatrick Center for Interdisciplinary Engineering, Medicine and Allied Sciences (FCIEMAS), which includes laboratories and Twinnie's Café. <<image [engineering_quad_1.jpeg] >> The Innovation Co-Lab and Levine Science Research Center (LSRC) within this quad offer spaces for creativity and prototyping, supporting students in their engineering endeavors. <<image [engineering_quad_2.jpeg] >>"
+  },
+  {
+    "place": "Perkins, Rubenstein, and Bostock Libraries",
+    "script": "Our next stop is the Perkins, Rubenstein, and Bostock Libraries. These primary university library spaces on West Campus house millions of volumes and offer accessible, open spaces for study and research. <<image [/assets/DukeTourImages/perkins_libraries_1.jpeg] >> The libraries are central to academic life at Duke and provide numerous resources and study areas for students and faculty."
+  },
+  {
+    "place": "Duke Chapel",
+    "script": "In the center of campus stands the Duke Chapel. This magnificent building was the vision of James B. Duke and is arguably the most recognized symbol of the university. Constructed between 1930-1932, the chapel is built of Indiana limestone and clad with iconic 'Duke Stone.' <<image [duke_chapel_1.jpeg] >> It has a seating capacity of 1,800 and houses stunning Neo-Gothic architecture, 77 stained glass windows, the 5,000 pipe Benjamin N. Duke Memorial Organ, and a 50-bell carillon. The chapel is open to visitors, and you may enjoy spending a few moments inside while being respectful of any ongoing services."
+  },
+  {
+    "place": "Bryan Center",
+    "script": "The Bryan Center, constructed in 1982, serves as a hub for student life and activities. It houses Student Affairs offices, student group spaces, theater operations, and dining facilities. <<image [bryan_center_1.jpeg] >> Notable spaces include the Center for Multicultural Affairs, the Center for Sexual and Gender Diversity, and the Disability Cultural Center. The center is also home to Duke theater operations and numerous flexible meeting spaces for student organizations."
+  },
+  {
+    "place": "Brodhead Center",
+    "script": "The Richard H. Brodhead Center for Campus Life, known as the Brodhead Center, is a hub for dining, community, and activity on campus. Opened in 2016, the center houses 14 eateries and features a teaching and demonstration kitchen. <<image [brodhead_center_1.jpeg] >> The building blends historic Gothic design with contemporary elements and supports sustainability through environmentally friendly practices. Duke has been ranked #1 for 'Best College Food in America' by DailyMeal for two consecutive years."
+  },
+  {
+    "place": "Sarah P. Duke Gardens",
+    "script": "The Sarah P. Duke Gardens, spanning 55 acres, is a celebrated destination for learning, inspiration, and enjoyment. It features specialized gardens such as the Historic Gardens, Doris Duke Center Gardens, Blomquist Garden of Native Plants, and Culberson Asiatic Arboretum. <<image [duke_gardens_1.jpeg] >> Key highlights include the terrace overlook, koi pond, Mary Duke Biddle rose garden, and Japanese-style arched bridge. The gardens attract over 600,000 visitors annually and are a local favorite."
+  }
+]
