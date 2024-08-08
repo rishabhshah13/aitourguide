@@ -27,7 +27,7 @@
 <!-- 3. Add Properly Constructed prompts -->
 4. Add Data
 5. Add Architecture Diagram
-
+6. Remove unnecessary files like navbar and all
 
 
 Installed 

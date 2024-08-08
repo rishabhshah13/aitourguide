@@ -5,3 +5,5 @@ uvicorn[standard]
 pytest
 matplotlib
 seaborn
+black
+flake8

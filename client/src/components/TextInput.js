@@ -1,12 +1,38 @@
 import React, { useRef, useState } from 'react';
 import '../styles/textinput.css'; // Ensure this import is included
 
+/**
+ * A component that allows users to upload a text file, displays its content,
+ * and provides a dropdown menu for selecting an option.
+ *
+ * @param {Object} props - The component props.
+ * @param {Function} props.setFileTextSegments - A function to set the text segments extracted from the file.
+ * @param {Function} props.setSelectedOption - A function to set the selected option from the dropdown menu.
+ *
+ * @returns {JSX.Element} The rendered component.
+ *
+ * @example
+ * // Example usage:
+ * <TextInput
+ *   setFileTextSegments={(segments) => console.log('Text segments:', segments)}
+ *   setSelectedOption={(option) => console.log('Selected option:', option)}
+ * />
+ */
 const TextInput = ({ setFileTextSegments, setSelectedOption }) => {
+  // Ref for the file input element
   const fileInputRef = useRef(null);
+  // State to control button visibility
   const [buttonVisible, setButtonVisible] = useState(true);
+  // State to store file content
   const [fileContent, setFileContent] = useState('');
+  // State to manage selected dropdown option
   const [selectedOption, setSelectedOptionState] = useState('GPT4o'); // Default option
 
+  /**
+   * Handles file selection and reads the file content.
+   *
+   * @param {Event} e - The event object from the file input change event.
+   */
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -25,10 +51,18 @@ const TextInput = ({ setFileTextSegments, setSelectedOption }) => {
     }
   };
 
+  /**
+   * Triggers the file input click event programmatically.
+   */
   const handleButtonClick = () => {
     fileInputRef.current.click();
   };
 
+  /**
+   * Handles dropdown menu changes and updates the selected option.
+   *
+   * @param {Event} e - The event object from the dropdown change event.
+   */
   const handleDropdownChange = (e) => {
     const option = e.target.value;
     setSelectedOption(option);
