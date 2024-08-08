@@ -93,3 +93,19 @@ jobs:
       uses: hadolint/hadolint-action@v3.1.0
       with:
         dockerfile: ./client/Dockerfile
+
+    - name: Push Frontend
+      uses: docker/build-push-action@v4
+      with:
+        context: ./client
+        file: ./client/Dockerfile
+        push: true
+        tags: rishabhshah13/frontend:latest
+          
+    - name: Push Backend
+      uses: docker/build-push-action@v4
+      with:
+        context: ./app
+        file: ./app/Dockerfile
+        push: true
+        tags: rishabhshah13/backend:latest
