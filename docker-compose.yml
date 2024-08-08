@@ -18,3 +18,5 @@ services:
     image: rishabhshah13/backend:latest
     ports:
       - "8000:8000"
+    volumes:
+      - ./assets/:/../../assets 
