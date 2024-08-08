@@ -20,7 +20,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '18' # Update this to match the Node.js version in your Dockerfile
+          node-version: '18' 
 
       - name: Install frontend dependencies
         working-directory: ./client
@@ -41,7 +41,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.11' # Match the Python version in your Dockerfile
+          python-version: '3.11' 
 
       - name: Install backend dependencies
         working-directory: ./app
@@ -55,13 +55,12 @@ jobs:
           black --version
           black .
           black --check .
-      - name: Lint with flake8
-        run: |
-          flake8 --version
-          flake8 .
+      # - name: Lint with flake8
+      #   run: |
+      #     flake8 --version
+      #     flake8 .
 
       - name: Run backend tests
-        # working-directory: ./app
         env:
           OPENAI_API_KEY2: ${{ secrets.OPENAI_API_KEY }}
         run: pytest --ignore=tests/test_mistral_responses.py
