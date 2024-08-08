@@ -27,6 +27,8 @@ const TranscriptDisplay = ({
   currentSegmentIndex,
   fileTextSegments,
 }) => {
+  console.log('fileTextSegments', fileTextSegments);
+  console.log('currentSegmentIndex', currentSegmentIndex);
   return (
     <div>
       <div style={{ display: 'none' }}>
@@ -34,7 +36,7 @@ const TranscriptDisplay = ({
         <p>{transcript}</p>
       </div>
 
-      <h3>File Text Segments:</h3>
+      {/* <h3>File Text Segments:</h3>
       {fileTextSegments.map((segment, index) => (
         <span
           key={index}
@@ -45,7 +47,20 @@ const TranscriptDisplay = ({
         >
           {segment}.
         </span>
-      ))}
+      ))} */}
+
+      {/* <h3>File Text Segments:</h3>
+      {fileTextSegments.map((segment, index) => (
+        <span
+          key={index}
+          style={{
+            backgroundColor:
+              index === currentSegmentIndex ? 'yellow' : 'transparent',
+          }}
+        >
+          {segment}.
+        </span>
+      ))} */}
     </div>
   );
 };

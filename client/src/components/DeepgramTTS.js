@@ -137,21 +137,26 @@ const DeepgramTTS = () => {
   return (
     <div className="container">
       <div className="section">
-        <TextInput
-          setFileTextSegments={setFileTextSegments}
-          setSelectedOption={setSelectedOption}
-        />
+        {/* <h1 className="title">Virtual Tour Guide</h1> */}
+        <div className="input-container">
+          <TextInput
+            setFileTextSegments={setFileTextSegments}
+            setSelectedOption={setSelectedOption}
+            currentSegmentIndex={currentSegmentIndex}
+          />
+        </div>
         <div className="button-container">
           {!showAskQuestionButton && (
             <button
               onClick={handleStartTour}
               disabled={fileTextSegments.length === 0}
+              className="primary-button"
             >
               <i className="fas fa-play"></i> Start Tour
             </button>
           )}
           {showAskQuestionButton && (
-            <button onClick={handlePauseTour}>
+            <button onClick={handlePauseTour} className="secondary-button">
               <i className="fas fa-pause"></i>{' '}
               {tourPaused ? 'Resume Tour' : 'Pause Tour'}
             </button>
@@ -170,7 +175,7 @@ const DeepgramTTS = () => {
         <div className="ask-question-container">
           <button
             onClick={toggleRecording}
-            className={isRecording ? 'recording' : ''}
+            className={`record-button ${isRecording ? 'recording' : ''}`}
           >
             <i
               className={
@@ -183,7 +188,7 @@ const DeepgramTTS = () => {
 
       {showPopup && (
         <Popup
-          message="The answer has been generated and spoken. Please review it."
+          message="Press close to continue the tour"
           onClose={handlePopupClose}
         />
       )}

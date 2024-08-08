@@ -18,7 +18,11 @@ import '../styles/textinput.css'; // Ensure this import is included
  *   setSelectedOption={(option) => console.log('Selected option:', option)}
  * />
  */
-const TextInput = ({ setFileTextSegments, setSelectedOption }) => {
+const TextInput = ({
+  setFileTextSegments,
+  setSelectedOption,
+  currentSegmentIndex,
+}) => {
   // Ref for the file input element
   const fileInputRef = useRef(null);
   // State to control button visibility
@@ -27,6 +31,9 @@ const TextInput = ({ setFileTextSegments, setSelectedOption }) => {
   const [fileContent, setFileContent] = useState('');
   // State to manage selected dropdown option
   const [selectedOption, setSelectedOptionState] = useState('GPT4o'); // Default option
+  // State to manage file text segments
+  const [fileTextSegments, setFileTextSegmentsState] = useState([]);
+  // State to manage the current segment index
 
   /**
    * Handles file selection and reads the file content.
@@ -44,6 +51,7 @@ const TextInput = ({ setFileTextSegments, setSelectedOption }) => {
           .map((segment) => segment.trim())
           .filter((segment) => segment);
         setFileTextSegments(segments);
+        setFileTextSegmentsState(segments); // Set file text segments to state
         setFileContent(text); // Set file content to state
       };
       reader.readAsText(file);
@@ -76,14 +84,20 @@ const TextInput = ({ setFileTextSegments, setSelectedOption }) => {
           <button onClick={handleButtonClick} className="add-tour-guide-button">
             Add Tour Guide
           </button>
-          <select
-            value={selectedOption}
-            onChange={handleDropdownChange}
-            className="dropdown-menu"
-          >
-            <option value="GPT4o">GPT4o</option>
-            <option value="Mistral">Mistral</option>
-          </select>
+          <div className="dropdown-container">
+            <label className="dropdown-label" htmlFor="model-select">
+              Select Model
+            </label>
+            <select
+              id="model-select"
+              value={selectedOption}
+              onChange={handleDropdownChange}
+              className="dropdown-menu"
+            >
+              <option value="GPT4o">GPT4o</option>
+              <option value="Mistral">Mistral</option>
+            </select>
+          </div>
         </div>
       )}
       <input
@@ -95,7 +109,25 @@ const TextInput = ({ setFileTextSegments, setSelectedOption }) => {
       />
       {!buttonVisible && fileContent && (
         <div className="file-content-box">
-          <pre>{fileContent}</pre>
+          <pre>
+            {fileTextSegments.length > 0 && (
+              <div>
+                {fileTextSegments.map((segment, index) => (
+                  <span
+                    key={index}
+                    style={{
+                      backgroundColor:
+                        index === currentSegmentIndex
+                          ? 'yellow'
+                          : 'transparent',
+                    }}
+                  >
+                    {segment}.
+                  </span>
+                ))}
+              </div>
+            )}
+          </pre>
         </div>
       )}
     </div>

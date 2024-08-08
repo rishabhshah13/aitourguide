@@ -1,7 +1,11 @@
 /* src/styles/textinput.css */
 .text-input-container {
   display: flex;
+  flex-direction: column;
   align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
 }
 
 .add-tour-guide-button {
@@ -15,11 +19,23 @@
     background-color 0.3s ease,
     transform 0.3s ease;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  font-size: 16px;
+  text-align: center;
+  width: 200px; /* Set a fixed width */
 }
 
 .add-tour-guide-button:hover {
   background-color: var(--accent-color);
   transform: translateY(-2px);
+}
+
+.dropdown-menu {
+  padding: 10px 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+  text-align: center;
+  width: 200px; /* Match the width of the button */
 }
 
 .file-content-box {
@@ -39,12 +55,19 @@
 
 .button-dropdown-container {
   display: flex;
+  flex-direction: column;
   align-items: center;
+  gap: 10px;
 }
 
-.dropdown-menu {
-  padding: 5px;
+.dropdown-container {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Adds distance between the label and the dropdown */
+}
+
+.dropdown-label {
   font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  font-weight: bold;
+  color: var(--primary-color);
 }

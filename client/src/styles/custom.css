@@ -1,0 +1,89 @@
+/* custom.css */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #f5f7fa;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.section {
+  width: 100%;
+  max-width: 600px;
+  margin-bottom: 20px;
+}
+
+.title {
+  font-size: 2em;
+  color: #333;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.input-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.primary-button,
+.secondary-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1em;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.primary-button:hover,
+.secondary-button:hover {
+  background-color: #0056b3;
+}
+
+.secondary-button {
+  background-color: #6c757d;
+}
+
+.secondary-button:hover {
+  background-color: #5a6268;
+}
+
+.ask-question-container {
+  margin-top: 20px;
+}
+
+.record-button {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 10px;
+  font-size: 1.5em;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.record-button.recording {
+  background-color: #c82333;
+}
+
+.record-button:hover {
+  background-color: #bd2130;
+}
+
+.ask-question-container .record-button {
+  margin-top: 20px;
+}
