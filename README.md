@@ -47,6 +47,7 @@ Add DeepgramAPI key and OpenAI API key in bash script
 To set up and run the project with Docker, execute the following script:
 
 ```bash
+chmod +x run_with_docker.sh
 ./run_with_docker.sh
 ```
 
@@ -55,6 +56,7 @@ To set up and run the project with Docker, execute the following script:
 To set up and run the project without Docker, execute the following script:
 
 ```bash
+chmod +x run_without_docker.sh
 ./run_without_docker.sh
 ```
 
