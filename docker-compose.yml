@@ -7,7 +7,7 @@ services:
       dockerfile: Dockerfile
     image: rishabhshah13/frontend:latest
     ports:
-      - "80:80"
+      - "3000:3000"
     depends_on:
       - backend
 
@@ -18,3 +18,5 @@ services:
     image: rishabhshah13/backend:latest
     ports:
       - "8000:8000"
+    volumes:
+      - ./assets/:/../../assets 
