@@ -49,15 +49,12 @@ app.add_middleware(
 class Query(BaseModel):
     question: str
     model: str
-
     """
     Represents a query with a question and model.
-    
     Attributes:
         question (str): The user's question.
         model (str): The model to be used for generating a response. 
     """
-
 
 # Dependency function to validate the query parameters
 def validate_query(question: str, model: str) -> Query:
