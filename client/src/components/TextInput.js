@@ -1,5 +1,6 @@
 import React, { useRef, useState } from 'react';
 import '../styles/textinput.css'; // Ensure this import is included
+import nlp from 'compromise';
 
 /**
  * A component that allows users to upload a text file, displays its content,
@@ -40,16 +41,16 @@ const TextInput = ({
    *
    * @param {Event} e - The event object from the file input change event.
    */
+
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
       const reader = new FileReader();
       reader.onload = () => {
         const text = reader.result;
-        const segments = text
-          .split('.')
-          .map((segment) => segment.trim())
-          .filter((segment) => segment);
+        const doc = nlp(text);
+        const segments = doc.sentences().out('array');
+
         setFileTextSegments(segments);
         setFileTextSegmentsState(segments); // Set file text segments to state
         setFileContent(text); // Set file content to state
@@ -122,7 +123,7 @@ const TextInput = ({
                           : 'transparent',
                     }}
                   >
-                    {segment}.
+                    {segment}
                   </span>
                 ))}
               </div>
