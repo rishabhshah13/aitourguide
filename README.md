@@ -2,8 +2,6 @@
 
 [![CI/CD Pipeline](https://github.com/rishabhshah13/aitourguide/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/rishabhshah13/aitourguide/actions/workflows/ci-cd.yml)
 
-## [Demo Video](https://youtu.be/uwEK3U-4VoY)
-
 ## Project Purpose
 
 The AI Tour Guide project is designed to offer an interactive and AI-powered virtual tour guide experience. By integrating advanced text-to-speech (TTS) and speech-to-text (STT) functionalities, the application provides informative and engaging narrations about various locations. It allows users to interact with the guide by asking questions and receiving detailed responses, making their exploration of different places both educational and entertaining. 
